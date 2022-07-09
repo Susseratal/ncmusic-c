@@ -1,4 +1,10 @@
-CC = gcc
-CFLAGS = -std=c99
-OUT = ncm.o
-# send help
+ncm: ncm.o
+	g++ ncm.o -o ncm -lncurses
+	@ls --color
+
+ncm.o: ncm.cpp
+	g++ -c ncm.cpp
+
+clean:
+	@rm *.o ncm
+	@ls --color
