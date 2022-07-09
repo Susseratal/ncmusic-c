@@ -1,32 +1,39 @@
 #include <dirent.h>
+#include <iostream>
+#include <filesystem>
+#include <string>
 #include <stdio.h>
 #include <stdlib.h>
 #include <curses.h>
-#include "config.h" // I made a config file
+#include "config.h" // ha ha I made a config file
 
-int main()
+using std::filesystem::directory_iterator;
+
+int main() 
 {
     initscr();
     DIR *d;
     struct dirent *dir;
-    d = opendir(conf::path);
-    printw("Hello, World!");
-    refresh();
-    char ch = getch();
-    endwin();
-    return 0;
+    // d = opendir(conf::path);
+    std::string path = conf::path;
+    for(const auto & file : directory_iterator(path))
+        printw("%s\n", file.path());
     /*
     if (d)
     {
         while ((dir = readdir(d)) != NULL)
         {
-            printf("%s\n", dir->d_name);
+            printw("%s\n", dir->d_name);
+            refresh();
         }
         closedir(d);
     }
     else
     {
-            printf("Failed to find directory?\n");
+            printw("Failed to find directory?\n");
     }
     */
+    char ch = getch();
+    endwin();
+    return 0;
 }
